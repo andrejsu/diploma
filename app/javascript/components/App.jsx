@@ -1,7 +1,10 @@
 import React from 'react'
+import ReactFlowTest from "./ReactFlow";
 
 const App = () => {
-  return <div>App</div>
+  return (
+    <ReactFlowTest />
+  )
 }
 
 export default App
