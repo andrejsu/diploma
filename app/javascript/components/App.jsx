@@ -1,9 +1,9 @@
 import React from 'react'
-import ReactFlowTest from "./ReactFlow";
+import ReactFlow from "./ReactFlow/ReactFlow";
 
 const App = () => {
   return (
-    <ReactFlowTest />
+    <ReactFlow />
   )
 }
 
