@@ -1,6 +1,8 @@
 @import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@import './base.css';
 
+@import "tailwindcss/components";
 @import 'daisyui/dist/full.css';
+
+@import "tailwindcss/utilities";
 @import 'reactflow/dist/style.css';
