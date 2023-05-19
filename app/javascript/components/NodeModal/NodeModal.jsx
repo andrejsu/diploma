@@ -12,7 +12,7 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
           <h3 className="mb-6 text-lg font-bold">Редактирование</h3>
           <div className="flex flex-col space-y-4">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium">Название</p>
+              <p className="text-sm font-medium">Название <span className="text-red-600">*</span></p>
               <Input
                 placeholder="Введите название"
                 value={node.data.name}
@@ -30,7 +30,7 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
               />
             </div>
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium">Менеджер</p>
+              <p className="text-sm font-medium">Менеджер <span className="text-red-600">*</span></p>
               <Select
                 className="w-full"
                 placeholder="Выберите менеджера"
@@ -71,8 +71,20 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
             </div>
           </div>
 
-          <div className="modal-action">
-            <label className="btn" onClick={close}>Сохранить</label>
+          <div className="modal-action flex space-between">
+            <button
+              className="btn btn-outline"
+              onClick={close}
+            >
+              Отменить
+            </button>
+            <button
+              className="btn"
+              disabled={node.data.name === '' && node.data.selected.subordinates.length === 0}
+              onClick={close}
+            >
+              Сохранить
+            </button>
           </div>
         </div>
       </div>

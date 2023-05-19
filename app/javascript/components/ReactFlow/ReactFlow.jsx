@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import ReactFlow, {
   ReactFlowProvider,
   MiniMap,
@@ -8,12 +8,15 @@ import ReactFlow, {
   useEdgesState,
   addEdge,
 } from 'reactflow'
+
 import NodeModal from "../NodeModal/NodeModal"
+import BaseNode from "../BaseNode/BaseNode"
 
 const initialNodes = (employees = []) => [
   {
     id: '1',
     position: { x: 0, y: 0 },
+    type: 'base',
     data: {
       label: '',
       name: '',
@@ -25,25 +28,28 @@ const initialNodes = (employees = []) => [
       selected: {
         manager: null,
         subordinates: [],
-      }
-    }
+      },
+    },
   },
 ]
 
 const Flow = ({data}) => {
-  const [nodes, setNodes, onNodesChange] =
-    useNodesState(data.organization.strucure?.nodes || initialNodes(data.users))
+  const [nodes, setNodes, onNodesChange] = useNodesState(data.organization.strucure?.nodes || initialNodes(data.users))
   const [edges, setEdges, onEdgesChange] =
     useEdgesState(data.organization.strucure?.edges || [])
 
   const [name, setName] = useState(data.organization.name)
   const [description, setDescription] = useState(data.organization.description)
   const [users, setUsers] = useState(data.users)
-  const [selectedNode, setSelectedNode] = useState(null)
+  const [selectedNode, setSelectedNode] = useState(nodes[0])
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
 
   const onNodeClick = (_, node) => selectedNode?.id === node.id ? setSelectedNode(null) : setSelectedNode(node)
+
+  const nodeTypes = useMemo(() => ({
+    base: BaseNode,
+  }), []);
 
   useEffect(() => {
     if (selectedNode) {
@@ -75,6 +81,7 @@ const Flow = ({data}) => {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onNodeClick={onNodeClick}
+        nodeTypes={nodeTypes}
       >
         <Controls />
         <MiniMap />
