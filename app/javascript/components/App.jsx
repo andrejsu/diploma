@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactFlow from "./ReactFlow/ReactFlow";
 
-const App = () => {
+const App = ({data}) => {
   return (
-    <ReactFlow />
+    <ReactFlow data={data} />
   )
 }
 
