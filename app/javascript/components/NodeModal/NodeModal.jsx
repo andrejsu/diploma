@@ -1,9 +1,36 @@
-import React from "react"
+import React, { useState } from "react"
 import {Input, Select} from "antd"
+import { useReactFlow } from 'reactflow'
 
 const { TextArea } = Input
 
 const NodeModal = ({node, setNode, isOpen, close}) => {
+  const reactFlowInstance = useReactFlow()
+
+  const [localNode, setLocalNode] = useState(node)
+
+  const save = () => {
+    reactFlowInstance.setNodes((nds) =>
+      nds.map((node) => {
+        if (localNode.id === node.id) {
+          node.data = { ...localNode.data }
+        }
+        return node
+      })
+    )
+
+    close()
+  }
+
+  const closeWithDeletion = () => {
+    if (localNode.id !== '1' && (localNode.data.name === '' || !localNode.data.selected.manager)) {
+      reactFlowInstance.setNodes((nds) => nds.filter((n) => n.id !== node.id))
+      reactFlowInstance.setEdges((eds) => eds.filter((n) => n.source !== node.id))
+    }
+
+    close()
+  }
+
   return (
     <>
       <input checked={isOpen} type="checkbox" className="modal-toggle" />
@@ -15,8 +42,8 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
               <p className="text-sm font-medium">Название <span className="text-red-600">*</span></p>
               <Input
                 placeholder="Введите название"
-                value={node.data.name}
-                onChange={(e) => setNode({...node, data: {...node.data, name: e.target.value}})}
+                value={localNode.data.name}
+                onChange={(e) => setLocalNode({...localNode, data: {...localNode.data, name: e.target.value}})}
               />
             </div>
 
@@ -25,8 +52,8 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
               <TextArea
                 placeholder="Введите описание"
                 rows={4}
-                value={node.data.description}
-                onChange={(e) => setNode({...node, data: {...node.data, description: e.target.value}})}
+                value={localNode.data.description}
+                onChange={(e) => setLocalNode({...localNode, data: {...localNode.data, description: e.target.value}})}
               />
             </div>
             <div className="flex flex-col space-y-1">
@@ -34,17 +61,17 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
               <Select
                 className="w-full"
                 placeholder="Выберите менеджера"
-                onChange={(value) =>
-                  setNode({...node, data: {
-                    ...node.data,
+                onChange={(selected) =>
+                  setLocalNode({...localNode, data: {
+                    ...localNode.data,
                     selected: {
-                      ...node.data.selected, manager: value
+                      ...localNode.data.selected, manager: localNode.data.options.managers.find((employee) => selected === employee.id)
                     }}
                   })
                 }
-                value={node.data.selected.manager}
+                value={localNode.data.selected.manager?.id}
                 options={
-                  node.data.options.managers.map(employee => ({label: employee.email, value: employee.email}))
+                  localNode.data.options.managers.map(employee => ({label: employee.email, value: employee.id}))
                 }
               />
             </div>
@@ -55,17 +82,17 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
                 mode="multiple"
                 allowClear
                 placeholder="Выберите подчиненых"
-                onChange={(value) =>
-                  setNode({...node, data: {
-                    ...node.data,
+                onChange={(selected) =>
+                  setLocalNode({...localNode, data: {
+                    ...localNode.data,
                     selected: {
-                      ...node.data.selected, subordinates: [...value]
+                      ...localNode.data.selected, subordinates: localNode.data.options.subordinates.filter((employee) => selected.includes(employee.id))
                     }}
                   })
                 }
-                value={node.data.selected.subordinates}
+                value={localNode.data.selected.subordinates.map(employee => employee.id)}
                 options={
-                  node.data.options.subordinates.map(employee => ({label: employee.email, value: employee.email}))
+                  localNode.data.options.subordinates.map(employee => ({label: employee.email, value: employee.id}))
                 }
               />
             </div>
@@ -74,14 +101,14 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
           <div className="modal-action flex space-between">
             <button
               className="btn btn-outline"
-              onClick={close}
+              onClick={closeWithDeletion}
             >
               Отменить
             </button>
             <button
               className="btn"
-              disabled={node.data.name === '' && node.data.selected.subordinates.length === 0}
-              onClick={close}
+              disabled={localNode.data.name === '' || !localNode.data.selected.manager || localNode === node}
+              onClick={save}
             >
               Сохранить
             </button>

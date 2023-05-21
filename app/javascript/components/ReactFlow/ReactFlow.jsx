@@ -12,10 +12,13 @@ import ReactFlow, {
 import NodeModal from "../NodeModal/NodeModal"
 import BaseNode from "../BaseNode/BaseNode"
 
+let id = 1
+const getId = () => `${++id}`
+
 const initialNodes = (employees = []) => [
   {
     id: '1',
-    position: { x: 0, y: 0 },
+    position: { x: 200, y: 300 },
     type: 'base',
     data: {
       label: '',
@@ -29,12 +32,14 @@ const initialNodes = (employees = []) => [
         manager: null,
         subordinates: [],
       },
+      getId: getId,
     },
   },
 ]
 
 const Flow = ({data}) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState(data.organization.strucure?.nodes || initialNodes(data.users))
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState(data.organization.strucure?.nodes || initialNodes(data.users))
   const [edges, setEdges, onEdgesChange] =
     useEdgesState(data.organization.strucure?.edges || [])
 
@@ -43,26 +48,15 @@ const Flow = ({data}) => {
   const [users, setUsers] = useState(data.users)
   const [selectedNode, setSelectedNode] = useState(nodes[0])
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges]);
+  useEffect(() => setSelectedNode(nodes.find((node) => node.id == id)), [id])
+
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges])
 
   const onNodeClick = (_, node) => selectedNode?.id === node.id ? setSelectedNode(null) : setSelectedNode(node)
 
   const nodeTypes = useMemo(() => ({
     base: BaseNode,
   }), []);
-
-  useEffect(() => {
-    if (selectedNode) {
-      setNodes((nds) =>
-        nds.map((node) => {
-          if (selectedNode?.id === node.id) {
-            node.data = { ...selectedNode.data }
-          }
-          return node
-        })
-      )
-    }
-  }, [selectedNode])
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
