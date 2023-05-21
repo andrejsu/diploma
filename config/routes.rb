@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
 
-  root "pages#home"
+  root "organizations#index"
 
-  resources :organizations, only: [:show]
+  resources :organizations
 end

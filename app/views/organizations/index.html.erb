@@ -1,0 +1,16 @@
+<div class="flex my-32 items-center">
+  <div class="mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    <% @organizations.map do |org| %>
+      <div class="card w-96 bg-neutral text-neutral-content">
+        <div class="card-body items-center text-center">
+          <h2 class="card-title"><%= org.name %></h2>
+          <p><%= org.description %></p>
+          <div class="card-actions justify-end mt-2">
+            <%= link_to "Открыть", organization_path(org), class: "btn btn-primary" %>
+            <button class="btn btn-ghost">Редактировать</button>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
