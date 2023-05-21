@@ -13,7 +13,7 @@
 
         <div class="form-control">
           <div class="label">
-            <%= f.label :password %>
+            <%= f.label :password, 'Пароль' %>
           </div>
           <%= f.password_field :password, autocomplete: "current-password", class: "input input-bordered" %>
         </div>
@@ -21,26 +21,26 @@
         <% if devise_mapping.rememberable? %>
           <div class="form-control">
             <div class="label cursor-pointer">
-              <%= f.label :remember_me, class: "label-text" %>
+              <%= f.label :remember_me, 'Запомнить меня', class: "label-text" %>
               <%= f.check_box :remember_me, class: "checkbox checkbox-xs" %>
             </div>
           </div>
         <% end %>
 
         <div class="form-control mt-6">
-          <%= f.submit "Log in", class: 'btn btn-primary' %>
+          <%= f.submit "Войти", class: 'btn btn-primary' %>
 
         </div>
 
         <div class="flex-col-reverse form-control text-center">
-          <%= render "devise/shared/links" %>
+          <%= render "users/shared/links" %>
         </div>
       </div>
     <% end %>
 
     <div class="text-center">
-      <h1 class="text-5xl font-bold">Login now!</h1>
-      <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+      <h1 class="text-5xl font-bold">Добро пожаловать!</h1>
+      <p class="py-6">Пожалуйста, введите свой логин и пароль, чтобы получить доступ к своему аккаунту</p>
     </div>
   </div>
 </div>

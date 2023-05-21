@@ -1,8 +1,6 @@
 <div class="absolute top-0 left-0 z-50 navbar bg-base-100 shadow-md">
   <div class="flex-1">
-    <%= link_to root_path, class: 'btn btn-ghost normal-case text-xl' do %>
-      <span class="btn btn-ghost normal-case text-xl">OrgTree</span>
-    <% end %>
+    <%= link_to "OrgTree", root_path, class: 'btn btn-ghost normal-case text-xl' %>
   </div>
 
   <% if user_signed_in? %>

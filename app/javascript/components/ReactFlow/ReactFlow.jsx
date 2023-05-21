@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useCallback, useMemo } from "react"
 import ReactFlow, {
   ReactFlowProvider,
   MiniMap,
@@ -7,13 +7,14 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
-} from 'reactflow'
+} from "reactflow"
+import { ToastContainer } from "react-toastify"
+import { save } from "./actions"
+import { id } from "../actions"
+import * as R from "ramda"
 
 import NodeModal from "../NodeModal/NodeModal"
 import BaseNode from "../BaseNode/BaseNode"
-
-let id = 1
-const getId = () => `${++id}`
 
 const initialNodes = (employees = []) => [
   {
@@ -32,21 +33,19 @@ const initialNodes = (employees = []) => [
         manager: null,
         subordinates: [],
       },
-      getId: getId,
     },
   },
 ]
 
 const Flow = ({data}) => {
   const [nodes, setNodes, onNodesChange] =
-    useNodesState(data.organization.strucure?.nodes || initialNodes(data.users))
+    useNodesState(data.organization.structure?.nodes || initialNodes(data.users))
   const [edges, setEdges, onEdgesChange] =
-    useEdgesState(data.organization.strucure?.edges || [])
+    useEdgesState(data.organization.structure?.edges || [])
 
-  const [name, setName] = useState(data.organization.name)
-  const [description, setDescription] = useState(data.organization.description)
-  const [users, setUsers] = useState(data.users)
-  const [selectedNode, setSelectedNode] = useState(nodes[0])
+  const [isSending, setIsSending] = useState(false)
+  const [selectedNode, setSelectedNode] = useState(null)
+  const [structure, setStructure] = useState({nodes, edges})
 
   useEffect(() => setSelectedNode(nodes.find((node) => node.id == id)), [id])
 
@@ -80,6 +79,16 @@ const Flow = ({data}) => {
         <Controls />
         <MiniMap />
         <Background variant="dots" gap={12} size={1} />
+        <ToastContainer />
+        <button
+          className={'absolute left-0 right-0 mx-auto bottom-6 btn btn-wide z-50'}
+          disabled={R.equals(structure.nodes.map(node => node.data), nodes.map(node => node.data))}
+          onClick={() => {
+            save(isSending, setIsSending, nodes, edges, data, setStructure)
+          }}
+        >
+          Сохранить
+        </button>
       </ReactFlow>
     </div>
   )

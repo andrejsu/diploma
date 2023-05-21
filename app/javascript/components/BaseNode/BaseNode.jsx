@@ -1,6 +1,6 @@
-import React from 'react'
-import { Handle, Position } from 'reactflow'
-import { useReactFlow } from 'reactflow'
+import React from "react"
+import { Handle, Position, useReactFlow } from "reactflow"
+import { popId } from "../actions"
 
 const BaseNode = (node) => {
   const reactFlowInstance = useReactFlow()
@@ -9,11 +9,11 @@ const BaseNode = (node) => {
     e.stopPropagation()
     e.preventDefault()
 
-    const id = node.data.getId()
+    const id = popId()
     const newNode = {
       id,
       type: 'base',
-      position: { x: node.xPos + 250, y: node.yPos + 300 },
+      position: { x: node.xPos + 600, y: node.yPos + 200 },
       data: {
         label: '',
         name: '',
@@ -26,7 +26,6 @@ const BaseNode = (node) => {
           manager: null,
           subordinates: [],
         },
-        getId: node.data.getId,
       },
     }
 

@@ -6,3 +6,5 @@
 
 @import "tailwindcss/utilities";
 @import 'reactflow/dist/style.css';
+@import 'react-toastify/dist/ReactToastify.css';
+@import './toastify.css';

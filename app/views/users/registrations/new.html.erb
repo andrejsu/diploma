@@ -15,7 +15,7 @@
 
         <div class="form-control">
           <div class="label">
-            <%= f.label :password, class: "label-text" %>
+            <%= f.label :password, "Пароль", class: "label-text" %>
           </div>
           <%= f.password_field :password, autocomplete: "new-password", class: "input input-bordered" %>
           <label class="label">
@@ -27,24 +27,24 @@
 
         <div class="form-control">
           <div class="label">
-            <%= f.label :password_confirmation, class: "label-text" %>
+            <%= f.label :password_confirmation, "Подтвердите пароль", class: "label-text" %>
           </div>
           <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input input-bordered" %>
         </div>
 
         <div class="form-control mt-6">
-          <%= f.submit "Sign up", class: 'btn btn-primary' %>
+          <%= f.submit "Зарегистрироваться", class: 'btn btn-primary' %>
         </div>
 
         <div class="flex form-control text-center">
-          <%= render "devise/shared/links" %>
+          <%= render "users/shared/links" %>
         </div>
       </div>
     <% end %>
 
     <div class="text-center">
-      <h1 class="text-5xl font-bold">Register now!</h1>
-      <p class="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+      <h1 class="text-5xl font-bold">Присоединяйтесь к нашему сообществу!</h1>
+      <p class="py-6">Зарегистрируйтесь, чтобы получить получить доступ к фунциям нашего приложения</p>
     </div>
   </div>
 </div>

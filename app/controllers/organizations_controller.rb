@@ -14,7 +14,7 @@ class OrganizationsController < ApplicationController
 
     respond_to do |format|
       if @organization.save
-        format.html { redirect_to device_url(@organization), notice: "Organization was successfully created." }
+        format.html { render json: @organization, status: :ok }
         format.json { render :show, status: :created, location: @organization }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -24,15 +24,15 @@ class OrganizationsController < ApplicationController
   end
 
   def new
-    @organization = Device.new
+    @organization = Organization.new
   end
 
   def edit; end
 
   def update
     respond_to do |format|
-      if @organization.update(device_params)
-        format.html { redirect_to organization_url(@organization), notice: "Organization was successfully updated." }
+      if @organization.update(organization_params)
+        format.html { render json: @organization, status: :ok }
         format.json { render :show, status: :ok, location: @organization }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -52,6 +52,6 @@ class OrganizationsController < ApplicationController
   end
 
   def organization_params
-    params.require(:device).permit(:name, :description, structure: {})
+    params.require(:organization).permit(:name, :description, structure: {})
   end
 end
