@@ -16,6 +16,9 @@
         <li class="btn btn-ghost <%= current_page?(organizations_path) || current_page?(root_path) ? 'font-bold' : '' %>">
           <%= link_to "Организации", organizations_path %>
         </li>
+        <li class="btn btn-ghost <%= current_page?(profiles_path) ? 'font-bold' : '' %>">
+          <%= link_to "Сотрудники", profiles_path %>
+        </li>
         <li class="dropdown dropdown-end">
           <label tabindex="0" class="btn btn-ghost btn-circle avatar">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-6 h-6 stroke-current">

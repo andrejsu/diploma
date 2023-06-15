@@ -1,0 +1,29 @@
+<div class="container mx-auto mt-8 mb-2">
+  <h1 class="text-2xl font-bold mb-3">Employee Profiles</h1>
+  <table class="w-full">
+    <thead>
+    <tr>
+      <th class="px-4 py-2">Имя</th>
+      <th class="px-4 py-2">Специализация</th>
+      <th class="px-4 py-2">Email</th>
+      <th class="px-4 py-2">Номер телефона</th>
+      <th class="px-4 py-2">Город</th>
+      <th class="px-4 py-2">Офис</th>
+      <th class="px-4 py-2">Дата рождения</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @profiles.each do |employee| %>
+      <tr>
+        <td class="border px-4 py-2"><%= employee.fullname %></td>
+        <td class="border px-4 py-2"><%= employee.specialization.name %></td>
+        <td class="border px-4 py-2"><%= employee.email %></td>
+        <td class="border px-4 py-2"><%= employee.phone_number %></td>
+        <td class="border px-4 py-2"><%= employee.city %></td>
+        <td class="border px-4 py-2"><%= employee.office.name %></td>
+        <td class="border px-4 py-2"><%= employee.date_of_birth %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
