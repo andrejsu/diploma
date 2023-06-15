@@ -26,8 +26,12 @@ const initialNodes = (employees = []) => [
       name: '',
       description: '',
       options: {
-        managers: employees,
-        subordinates: employees,
+        managers: employees.map(({user, profile, specialization}) => (
+          {id: user.id, name: profile.fullname, specialization: specialization.name}
+        )),
+        subordinates: employees.map(({user, profile, specialization}) => (
+          {id: user.id, name: profile.fullname, specialization: specialization.name}
+        )),
       },
       selected: {
         manager: null,
@@ -42,6 +46,8 @@ const Flow = ({data}) => {
     useNodesState(data.organization.structure?.nodes || initialNodes(data.users))
   const [edges, setEdges, onEdgesChange] =
     useEdgesState(data.organization.structure?.edges || [])
+
+  console.log(data)
 
   const [isSending, setIsSending] = useState(false)
   const [selectedNode, setSelectedNode] = useState(null)

@@ -48,7 +48,14 @@ class OrganizationsController < ApplicationController
   end
 
   def load_users
-    @users = User.all
+    @users = User.includes(profile: [:office, :specialization]).map do |user|
+      {
+        user: user,
+        profile: user.profile,
+        office: user.profile.office,
+        specialization: user.profile.specialization,
+      }
+    end
   end
 
   def organization_params

@@ -54,7 +54,7 @@ const BaseNode = (node) => {
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium">Менеджер</p>
             {node.data.selected.manager
-              ? <p className="">{node.data.selected.manager.email}</p>
+              ? <p className="">{`${node.data.selected.manager.name} (${node.data.selected.manager.specialization})`}</p>
               : <p className="text-gray-500">Выберите менеджера</p>
             }
           </div>
@@ -63,7 +63,7 @@ const BaseNode = (node) => {
             <div className="flex flex-col space-y-2">
               {node.data.selected.subordinates.length !== 0
                 ? node.data.selected.subordinates.map((subordinate) =>
-                  <p>{subordinate.email}</p>
+                  <p>{`${subordinate.name} (${subordinate.specialization})`}</p>
                 )
                 : <p className="text-gray-500">Подчиненные не выбраны</p>
               }

@@ -71,7 +71,7 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
                 }
                 value={localNode.data.selected.manager?.id}
                 options={
-                  localNode.data.options.managers.map(employee => ({label: employee.email, value: employee.id}))
+                  localNode.data.options.managers.map(employee => ({label: `${employee.name} (${employee.specialization})`, value: employee.id}))
                 }
               />
             </div>
@@ -92,9 +92,10 @@ const NodeModal = ({node, setNode, isOpen, close}) => {
                 }
                 value={localNode.data.selected.subordinates.map(employee => employee.id)}
                 options={
-                  localNode.data.options.subordinates.map(employee => ({label: employee.email, value: employee.id}))
+                  localNode.data.options.subordinates.map(employee => ({label: `${employee.name} (${employee.specialization})`, value: employee.id}))
                 }
               />
+              {console.log(localNode.data.options.subordinates)}
             </div>
           </div>
 
