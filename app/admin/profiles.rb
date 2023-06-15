@@ -14,5 +14,16 @@ ActiveAdmin.register Profile do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+
+  show do
+    attributes_table do
+      default_attribute_table_rows.each do |field|
+        row field
+      end
+      row :roles do |r|
+        r.roles.map(&:name).join(", ")
+      end
+    end
+  end
+
 end
