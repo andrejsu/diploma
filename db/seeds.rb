@@ -1,8 +1,27 @@
-20.times do |n|
+10.times do |n|
+  Specialization.create!(name: FFaker::Job.title)
+end
+
+3.times do |n|
+  Office.create!(name: FFaker::CompanyIT.name)
+end
+
+50.times do |n|
   email = FFaker::Internet.unique.email
   password = "619736"
-  User.create!(email: email,
-               password:              password,
-               password_confirmation: password)
+
+  user = User.create!(email: email,
+                      password:              password,
+                      password_confirmation: password)
+  Profile.create!(fullname: FFaker::NameRU.unique.name,
+                  email: FFaker::Internet.unique.email,
+                  phone_number: FFaker::PhoneNumberRU.phone_number,
+                  city: FFaker::AddressRU.city,
+                  date_of_birth: Date.new(1985, 12, 8),
+                  user: user,
+                  office: Office.all.sample,
+                  specialization: Specialization.all.sample)
 end
+
+User.first.add_role :admin
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
