@@ -7,9 +7,11 @@
     <div class="flex-none">
       <ul class="flex px-1 space-x-2 items-center">
         <% if current_page?(organizations_path) || current_page?(root_path) %>
-          <li>
-            <%= link_to 'Добавить организацию', new_organization_path, class: "btn btn-primary" %>
-          </li>
+          <% if current_user.has_role? :admin %>
+            <li>
+              <%= link_to 'Добавить организацию', new_organization_path, class: "btn btn-primary" %>
+            </li>
+          <% end %>
         <% end %>
         <li class="btn btn-ghost <%= current_page?(organizations_path) || current_page?(root_path) ? 'font-bold' : '' %>">
           <%= link_to "Организации", organizations_path %>
