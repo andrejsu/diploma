@@ -1,9 +1,11 @@
-import React from "react"
+import React, {useContext} from "react"
 import { Handle, Position, useReactFlow } from "reactflow"
 import { popId } from "../actions"
+import {EditContext} from "../context"
 
 const BaseNode = (node) => {
   const reactFlowInstance = useReactFlow()
+  const canEdit = useContext(EditContext)
 
   const add = (e) => {
     e.stopPropagation()
@@ -70,13 +72,15 @@ const BaseNode = (node) => {
             </div>
           </div>
         </div>
-        <button
-          className="btn btn-sm btn-block mt-2"
-          onClick={add}
-          disabled={node.data.name === '' || !node.data.selected.manager}
-        >
-          Добавить
-        </button>
+        {canEdit &&
+          <button
+            className="btn btn-sm btn-block mt-2"
+            onClick={add}
+            disabled={node.data.name === '' || !node.data.selected.manager}
+          >
+            Добавить
+          </button>
+        }
       </div>
       <Handle
         type="source"

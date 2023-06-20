@@ -1,6 +1,6 @@
 <%= content_tag :div, '',
                 data: {
                   controller: 'react',
-                  react_data_value: { id: @organization.id, users: @users, organization: @organization }.to_json,
+                  react_data_value: { id: @organization.id, users: @users, organization: @organization, can_edit: current_user.has_role?(:admin) }.to_json,
                 }
 %>

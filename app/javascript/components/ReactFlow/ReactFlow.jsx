@@ -47,13 +47,14 @@ const Flow = ({data}) => {
   const [edges, setEdges, onEdgesChange] =
     useEdgesState(data.organization.structure?.edges || [])
 
-  console.log(data)
-
   const [isSending, setIsSending] = useState(false)
   const [selectedNode, setSelectedNode] = useState(null)
   const [structure, setStructure] = useState({nodes, edges})
 
-  useEffect(() => setSelectedNode(nodes.find((node) => node.id == id)), [id])
+  useEffect(() => {
+    if (data?.can_edit)
+      setSelectedNode(nodes.find((node) => node.id == id))
+  }, [id])
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), [setEdges])
 
@@ -82,7 +83,7 @@ const Flow = ({data}) => {
         onNodeClick={onNodeClick}
         nodeTypes={nodeTypes}
       >
-        <Controls />
+        <Controls showInteractive={data?.can_edit || false} />
         <MiniMap />
         <Background variant="dots" gap={12} size={1} />
         <ToastContainer />
